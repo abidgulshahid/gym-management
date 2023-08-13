@@ -14,7 +14,7 @@ class UserLoginForm(forms.ModelForm):
         self.fields['username'].widget.attrs['class'] = 'form-control'
         self.fields['password'].widget.attrs['class'] = 'form-control'
 
-    def clean_email(self):
+    def clean_username(self):
         email = self.cleaned_data.get('username')
         exists= User.objects.filter(email=email).exists()
         print(exists)
