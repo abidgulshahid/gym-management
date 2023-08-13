@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views import View
 
 from gym_users.forms.signup import UserSignUpForm
+from gym_users.models import User
 
 
 class SignUpView(View):
@@ -12,3 +13,20 @@ class SignUpView(View):
         form = UserSignUpForm()
         context = {'form': form}
         return render(request, 'gym_users/signup.html', context=context)
+
+    def post(self, request):
+        form = UserSignUpForm(data=request.POST)
+        print(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            print(data)
+            email = data['email']
+            password = data['password']
+            type = data['type']
+            User.objects.create(
+                email = email,
+                username= email,
+                type= type,
+                password= password
+            )
+            print("DONE")
