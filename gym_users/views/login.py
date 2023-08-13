@@ -20,7 +20,6 @@ class LoginView(View):
         if form.is_valid():
             data = form.cleaned_data
             user = authenticate(**data)
-            print(user,'username')
             login(request,user)
             return HttpResponseRedirect(reverse_lazy('index_view'))
         else:
