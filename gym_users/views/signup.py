@@ -1,4 +1,6 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views import View
 
 from gym_users.forms.signup import UserSignUpForm
@@ -29,4 +31,4 @@ class SignUpView(View):
                 type= type,
                 password= password
             )
-            print("DONE")
+            return HttpResponseRedirect(reverse_lazy('login_view'))
