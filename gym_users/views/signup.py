@@ -24,6 +24,8 @@ class SignUpView(View):
             user = form.save(commit=False)
             user.username =data['email']
             user = form.save()
+            user.set_password(user.password)
+            user.save()
             user.refresh_from_db()
             user.profile.birth_date = data['birth_date']
             user.save()
