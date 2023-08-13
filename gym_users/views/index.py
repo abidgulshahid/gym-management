@@ -7,6 +7,5 @@ class IndexView(View):
         return super(IndexView, self).dispatch(request, *args, **kwargs)
 
     def get(self, request):
-        # form = LoginForm()
         context = {'form': ''}
         return render(request, 'gym_users/index.html', context=context)
