@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import View
-
+from django.contrib.auth import login, authenticate
 from gym_users.forms.signup import UserSignUpForm
 from gym_users.models import User
 
@@ -32,3 +32,7 @@ class SignUpView(View):
                 password= password
             )
             return HttpResponseRedirect(reverse_lazy('login_view'))
+        else:
+            print(form.errors)
+        context = {'form': form}
+        return render(request, 'gym_users/signup.html', context=context)
