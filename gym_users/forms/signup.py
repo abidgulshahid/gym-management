@@ -18,7 +18,9 @@ class UserSignUpForm(forms.ModelForm):
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        exists= User.objects.filter(email__iexact=email)
+        print(email)
+        exists= User.objects.filter(email=email)
+        print(exists)
         if exists:
             raise forms.ValidationError("Email Alreayt Exists")
         return True
