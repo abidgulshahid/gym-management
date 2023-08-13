@@ -2,9 +2,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import View
-from django.contrib.auth import login, authenticate
 from gym_users.forms.signup import UserSignUpForm
-from gym_users.models import User
 
 
 class SignUpView(View):
@@ -22,7 +20,7 @@ class SignUpView(View):
         if form.is_valid():
             data = form.cleaned_data
             user = form.save(commit=False)
-            user.username =data['email']
+            user.username = data['email']
             user = form.save()
             user.set_password(user.password)
             user.save()
