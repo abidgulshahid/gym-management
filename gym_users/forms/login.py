@@ -1,3 +1,8 @@
-from django.contrib.auth import forms
+from django import forms
+from gym_users.models import User
 
-class UserLoginForm(form)
+
+class UserLoginForm(forms.Form):
+    class Meta:
+        model = User
+        fields = ['email', 'password']
