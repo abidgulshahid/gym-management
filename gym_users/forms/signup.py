@@ -23,14 +23,10 @@ class UserSignUpForm(forms.ModelForm):
 
         self.fields['type'].widget.attrs['class'] = 'form-control'
 
-    # def clean_email(self):
-    #     email = self.cleaned_data.get('email')
-    #     print(email)
-    #     exists= User.objects.filter(email=email)
-    #     print(exists)
-    #     if exists:
-    #         raise forms.ValidationError("Email Alreayt Exists")
-    #     return True
-
-
-
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        print(email)
+        exists= User.objects.filter(email=email).exists()
+        if exists:
+            raise forms.ValidationError("Email Alreayt Exists")
+        return True
