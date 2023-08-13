@@ -1,5 +1,6 @@
 import uuid
-
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.db import models
 from .manager import AbstractUser, UserManager, BaseUserManager
 
@@ -11,7 +12,6 @@ class User(AbstractUser):
     is_deleted = models.BooleanField(default=False)
     modified_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
-
 
     objects = UserManager()
 
@@ -42,6 +42,7 @@ class Tokens(models.Model):
     user_id = models.UUIDField(primary_key=True, unique=True, default=uuid.uuid4())
     token = models.TextField()
 
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(max_length=500, blank=True)
@@ -50,3 +51,10 @@ class Profile(models.Model):
     is_deleted = models.BooleanField(default=False)
     modified_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
+
+
+@receiver(post_save, sender=User)
+def update_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+    instance.profile.save()
