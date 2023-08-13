@@ -2,16 +2,19 @@ from django import forms
 from gym_users.models import User
 
 
-class UserSignUpForm(forms.Form):
+class UserSignUpForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['email', 'password', 'type']
-    TYPE_CHOICES = [("coach", 'coach'), ("user", 'user')]
+    TYPE_CHOICES = [("coach", 'COACH'), ("user", 'USER')]
 
-    def __init__(self, user, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super(UserSignUpForm, self).__init__(*args, **kwargs)
 
-        self.fields['type'].choices = self.TYPE_CHOICES
+        self.fields['type'] = forms.ChoiceField(choices=self.TYPE_CHOICES)
+        self.fields['email'].widget.attrs['class'] = 'form-control'
+        self.fields['password'].widget.attrs['class'] = 'form-control'
+        self.fields['type'].widget.attrs['class'] = 'form-control'
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
