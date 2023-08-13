@@ -24,4 +24,5 @@ class LoginView(View):
             return HttpResponseRedirect(reverse_lazy('index_view'))
         else:
             print(form.errors)
-
+        context = {'form': form}
+        return render(request, 'gym_users/login.html', context=context)
