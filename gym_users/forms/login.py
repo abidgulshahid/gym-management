@@ -16,9 +16,7 @@ class UserLoginForm(forms.Form):
     def validate_username(self):
         email = self.cleaned_data.get('username')
         exists= User.objects.filter(email=email).first()
-        print(exists, 'existss')
         if exists:
-            print('here')
             return exists.email
         raise forms.ValidationError("Email Doesn't Exists")
 
