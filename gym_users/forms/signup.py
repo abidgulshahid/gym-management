@@ -13,5 +13,12 @@ class UserSignUpForm(forms.Form):
 
         self.fields['type'].choices = self.TYPE_CHOICES
 
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        exists= User.objects.filter(email__iexact=email)
+        if exists:
+            raise forms.ValidationError("Email Alreayt Exists")
+        return True
+
 
 
