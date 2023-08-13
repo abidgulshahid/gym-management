@@ -21,16 +21,10 @@ class SignUpView(View):
         print(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            print(data)
-            email = data['email']
-            password = data['password']
-            type = data['type']
-            User.objects.create(
-                email = email,
-                username= email,
-                type= type,
-                password= password
-            )
+            user = form.save()
+            user.refresh_from_db()
+            user.profile.birth_date = data['birth_date']
+            user.save()
             return HttpResponseRedirect(reverse_lazy('login_view'))
         else:
             print(form.errors)
