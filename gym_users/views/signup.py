@@ -21,6 +21,8 @@ class SignUpView(View):
         print(request.POST)
         if form.is_valid():
             data = form.cleaned_data
+            user = form.save(commit=False)
+            user.username =data['email']
             user = form.save()
             user.refresh_from_db()
             user.profile.birth_date = data['birth_date']
