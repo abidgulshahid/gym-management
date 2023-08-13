@@ -14,12 +14,12 @@ class UserLoginForm(forms.ModelForm):
         self.fields['username'].widget.attrs['class'] = 'form-control'
         self.fields['password'].widget.attrs['class'] = 'form-control'
 
-    def clean_username(self):
-        email = self.cleaned_data.get('username')
-        exists= User.objects.filter(email=email).exists()
-        print(exists)
-        if exists:
-            print('here')
-            return True
-        raise forms.ValidationError("Email Doesn't Exists")
+    # def clean_username(self):
+    #     email = self.cleaned_data.get('username')
+    #     exists= User.objects.filter(email=email).first()
+    #     print(exists, 'existss')
+    #     if exists:
+    #         print('here')
+    #         return exists.email
+    #     raise forms.ValidationError("Email Doesn't Exists")
 
