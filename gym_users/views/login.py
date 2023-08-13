@@ -1,6 +1,8 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views import View
-
+from django.contrib.auth import login, authenticate
 from gym_users.forms.login import UserLoginForm
 
 
@@ -12,3 +14,17 @@ class LoginView(View):
         form = UserLoginForm()
         context = {'form': form}
         return render(request, 'gym_users/login.html', context=context)
+
+    def post(self, request):
+        form = UserLoginForm(data=request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            email = data['email']
+            password = data['password']
+            user = authenticate(username=email, password=password)
+            print(user,'username')
+            login(request,user)
+            return HttpResponseRedirect(reverse_lazy('index_view'))
+        else:
+            print(form.errors)
+
