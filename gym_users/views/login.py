@@ -19,9 +19,7 @@ class LoginView(View):
         form = UserLoginForm(data=request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            email = data['email']
-            password = data['password']
-            user = authenticate(username=email, password=password)
+            user = authenticate(**data)
             print(user,'username')
             login(request,user)
             return HttpResponseRedirect(reverse_lazy('index_view'))
