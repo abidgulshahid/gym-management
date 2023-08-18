@@ -66,3 +66,15 @@ class ScheduleClass(models.Model):
     time = models.DateTimeField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+class Payments(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    Address = models.TextField()
+    zip = models.CharField(max_length=255, null=True, blank=True)
+    email = models.CharField(max_length=255, null=True, blank=True)
+    city = models.CharField(max_length=255, null=True, blank=True)
+    province = models.CharField(max_length=255, null=True, blank=True)
+    bank_account_number = models.CharField(max_length=255, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
