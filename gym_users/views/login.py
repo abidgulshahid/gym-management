@@ -22,7 +22,7 @@ class LoginView(View):
             user = authenticate(**data)
             print(user, 'user')
             login(request, user)
-            return HttpResponseRedirect(reverse_lazy('index_view'))
+            return HttpResponseRedirect(reverse_lazy('dashboard_view'))
         else:
             print(form.errors)
         context = {'form': form}
