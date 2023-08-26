@@ -1,16 +1,25 @@
 <style>
     .navbar {
+    color:white;
     background-color:hsl(210, 25%, 11%) !important;
     }
+    .navbar a {color:white}
 </style>
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark nav-right ">
             <div class="container">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                <div class="collapse navbar-collapse float-left" id="navbarSupportedContent">
+                   {% if request.user.is_authenticated %}
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0 ">
+                        <li>Home</li>
+                        <li><a href="#" class="p-1">Add Payment</a> </li>
+                        <li><a href="#">Add Payment</a> </li>
+
 
                     </ul>
+                   {% else %}
+                   {% endif %}
                 </div> -
             </div>
         </nav>
