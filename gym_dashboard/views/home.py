@@ -9,6 +9,6 @@ class Dashboard(View):
         return super(Dashboard, self).dispatch(request, *args, **kwargs)
 
     def get(self, request):
-        print(request.user)
+        print(request.user.type)
         if request.user.is_authenticated: return render(request, 'gym_dashboard/dashboard.html', context={'request':request})
         return HttpResponseRedirect(reverse_lazy('index_view'))
