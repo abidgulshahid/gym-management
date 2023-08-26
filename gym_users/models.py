@@ -7,7 +7,7 @@ from .manager import AbstractUser, UserManager, BaseUserManager
 
 class User(AbstractUser):
     id = models.UUIDField(primary_key=True, unique=True, default=uuid.uuid4())
-    email = models.EmailField(max_length=100, unique=True)
+    email = models.CharField(max_length=100, unique=True)
     type = models.CharField(max_length=255, null=True, blank=True)
     is_deleted = models.BooleanField(default=False)
     modified_at = models.DateTimeField(auto_now=True)
