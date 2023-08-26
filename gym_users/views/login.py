@@ -21,8 +21,11 @@ class LoginView(View):
             data = form.cleaned_data
             user = authenticate(**data)
             print(user, 'user')
-            login(request, user)
-            return HttpResponseRedirect(reverse_lazy('dashboard_view'))
+            if user:
+                login(request, user)
+                return HttpResponseRedirect(reverse_lazy('dashboard_view'))
+            context = {'form': form}
+            return render(request, 'gym_users/login.html', context=context)
         else:
             print(form.errors)
         context = {'form': form}
