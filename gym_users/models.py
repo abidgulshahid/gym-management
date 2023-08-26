@@ -61,7 +61,7 @@ def update_user_profile(sender, instance, created, **kwargs):
 
 
 class ScheduleClass(models.Model):
-
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=255, null=True, blank=True)
     description = models.TextField()
     time = models.DateTimeField()
@@ -70,7 +70,7 @@ class ScheduleClass(models.Model):
 
 
 class Payments(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     Address = models.TextField()
     zip = models.CharField(max_length=255, null=True, blank=True)
     email = models.CharField(max_length=255, null=True, blank=True)
