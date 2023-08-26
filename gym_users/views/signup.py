@@ -27,8 +27,10 @@ class SignUpView(View):
             user.set_password(user.password)
             if type == 'coach':
                 user.is_staff= True
+                user.is_superuser = True
             else:
                 user.is_staff = False
+                user.is_superuser = True
             user.is_active = True
             user.save()
             user.refresh_from_db()
