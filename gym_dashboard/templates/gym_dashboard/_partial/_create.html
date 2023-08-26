@@ -1,0 +1,82 @@
+<style>
+    .modal-header{
+padding-left: 2.2rem;
+padding-right: 1.25rem;
+padding-bottom: 0px;
+padding-top: 1.25rem;
+border-bottom: 0px;
+}
+
+.modal-body {
+padding-left: 35px;
+padding-right: 35px;
+padding-bottom: 35px;
+}
+</style>
+<div class="modal-header">
+    <h5 class="modal-title">Add a Payment</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+    </button>
+
+</div>
+<form class="form-horizontal content-form form-custom" method="post" role="form" action="">
+    {% csrf_token %}
+    <div class="modal-body">
+        <div class="col-md-12 col-lg-12 pr-0 pl-0 internal-div">
+
+            <div class="col-md-12">
+                <div class="wb-event-box-h-14">
+                    <div class="indicator_opr_new float-right" style="display:inline;" >
+
+                    </div>
+                    <div class="indicator_processing_new text-center float-right" hidden>
+                        <div class="spinner-border text-gray mt-1" role="status" style="width: 1rem !important;height: 1rem !important;">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                    <div class="clearfix" style="clear:both;"></div>
+                </div>
+            </div>
+            <div class="col-md-12" style="margin:auto">
+                <div class="form-group text-left label-floating is-empty {% if form.wedding_fairs_choices.errors %} has-error {% endif %}">
+                    <label class="wb-event-box-b-12 ">Address</label>
+                    {{form.Address}}
+
+                </div>
+                <div class="clearfix" style="clear:both;"></div>
+            </div>
+
+
+              <div class="col-md-12" style="margin:auto">
+                <div class="form-group text-left label-floating is-empty {% if form.promo_code.errors %} has-error {% endif %}">
+                    <label class="wb-event-box-b-12 ">zip</label>
+                    {{form.zip}}
+                </div>
+                <div class="clearfix" style="clear:both;"></div>
+            </div>
+
+                  <div class="col-md-12" style="margin:auto">
+                <div class="form-group text-left label-floating is-empty {% if form.promo_code.errors %} has-error {% endif %}">
+                    <label class="wb-event-box-b-12 ">Bank Account Number</label>
+                    {{form.bank_account_number}}
+                </div>
+                <div class="clearfix" style="clear:both;"></div>
+            </div>
+
+            <div class="clearfix" style="clear:both;"></div>
+            <input type="text" name="create_entry" value="{{request.user.user_id}}" hidden>
+            <input type="text" name="create_monthly" id="create_monthly" value="" hidden>
+        <div class="clearfix" style="clear:both;"></div>
+
+ </div>
+
+    </div>
+    <div class="row">
+            <div class="col-md-12 p-4 pl-5 pr-5">
+                <a style="color:white"  class="btn btn-danger wb-white-font-14 save-btn" onclick="submit_payment()">Add an Entry</a>
+            <a type="button" data-dismiss="modal" class="ml-3 ">Cancel</a>
+            </div>
+        </div>
+</form>
+
+<div class="clearfix"></div>
