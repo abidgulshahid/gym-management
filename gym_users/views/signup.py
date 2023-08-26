@@ -20,14 +20,15 @@ class SignUpView(View):
         if form.is_valid():
             data = form.cleaned_data
             user = form.save(commit=False)
-            type = data['coach']
+            type = data['type']
+            print(data['email'])
+            user.username = data['email']
+            user = form.save()
+            user.set_password(user.password)
             if type == 'coach':
                 user.is_staff= True
             else:
                 user.is_staff = False
-            user.username = data['email']
-            user = form.save()
-            user.set_password(user.password)
             user.is_active = True
             user.save()
             user.refresh_from_db()
