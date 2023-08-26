@@ -10,5 +10,5 @@ class Dashboard(View):
 
     def get(self, request):
         print(request.user)
-        if request.user.is_authenticated: return render(request, 'gym_dashboard/dashboard.html', context={})
+        if request.user.is_authenticated: return render(request, 'gym_dashboard/dashboard.html', context={'request':request})
         return HttpResponseRedirect(reverse_lazy('index_view'))
