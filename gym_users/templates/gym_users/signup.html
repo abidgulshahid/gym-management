@@ -17,6 +17,23 @@
            <form class="form-horizontal form-custom" method="post" role="form" action="">
                {% csrf_token %}
 
+                         <div class="form-group">
+    <label for="exampleInputEmail1">First Name</label>
+                                {{form.first_name}}
+
+  </div>
+
+                                        <div class="form-group">
+    <label for="exampleInputEmail1">Last Name</label>
+                                {{form.last_name}}
+
+  </div>
+             <div class="form-group">
+    <label for="exampleInputEmail1">Father Name</label>
+                                {{form.father_name}}
+
+  </div>
+
                             <div class="form-group">
     <label for="exampleInputEmail1">Email address</label>
                                 {{form.email}}
