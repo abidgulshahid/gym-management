@@ -23,6 +23,9 @@ class SignUpView(View):
             type = data['type']
             print(data['email'])
             user.username = data['email']
+            user.first_name = data['first_name']
+            user.last_name = data['last_name']
+
             user = form.save()
             user.set_password(user.password)
             if type == 'coach':
@@ -34,6 +37,7 @@ class SignUpView(View):
             user.is_active = True
             user.save()
             user.refresh_from_db()
+            user.profile.father_name = data['father_name']
             user.profile.birth_date = data['birth_date']
             user.save()
             return HttpResponseRedirect(reverse_lazy('login_view'))
