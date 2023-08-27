@@ -6,10 +6,13 @@ from datetime import datetime, date
 
 class UserSignUpForm(forms.ModelForm):
     birth_date = forms.DateField(help_text='Required. Format: YYYY-MM-DD')
+    first_name = forms.CharField(max_length=255)
+    last_name = forms.CharField(max_length=255)
+    father_name = forms.CharField(max_length=255)
 
     class Meta:
         model = User
-        fields = ['email', 'password', 'type', 'birth_date']
+        fields = ['email', 'password', 'type', 'birth_date','first_name', 'last_name', 'father_name']
 
     TYPE_CHOICES = [("coach", 'COACH'), ("user", 'USER')]
 
@@ -22,6 +25,9 @@ class UserSignUpForm(forms.ModelForm):
         self.fields['birth_date'].widget.attrs['type'] = 'datetime'
         self.fields['birth_date'].widget = forms.TextInput(attrs={'type': 'date'})
         self.fields['birth_date'].widget.attrs['class'] = 'form-control'
+        self.fields['first_name'].widget.attrs['class'] = 'form-control'
+        self.fields['last_name'].widget.attrs['class'] = 'form-control'
+        self.fields['father_name'].widget.attrs['class'] = 'form-control'
 
         self.fields['type'].widget.attrs['class'] = 'form-control'
 
