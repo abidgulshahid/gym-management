@@ -90,6 +90,7 @@ class Payments(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     Address = models.TextField()
     zip = models.CharField(max_length=255, null=True, blank=True)
+    amount  = models.BigIntegerField(null=True)
     email = models.CharField(max_length=255, null=True, blank=True)
     city = models.CharField(max_length=255, null=True, blank=True)
     province = models.CharField(max_length=255, null=True, blank=True)
