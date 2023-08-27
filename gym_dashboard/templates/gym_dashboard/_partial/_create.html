@@ -46,6 +46,15 @@ padding-bottom: 35px;
                 <div class="clearfix" style="clear:both;"></div>
             </div>
 
+                        <div class="col-md-12" style="margin:auto">
+                <div class="form-group text-left label-floating is-empty {% if form.wedding_fairs_choices.errors %} has-error {% endif %}">
+                    <label class="wb-event-box-b-12 ">Amount</label>
+                    {{form.amount}}
+
+                </div>
+                <div class="clearfix" style="clear:both;"></div>
+            </div>
+
 
               <div class="col-md-12" style="margin:auto">
                 <div class="form-group text-left label-floating is-empty {% if form.promo_code.errors %} has-error {% endif %}">
