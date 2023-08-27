@@ -1,0 +1,51 @@
+{% extends "gym_users/base.html" %}
+{% load static %}
+<style>
+    button {
+
+    background-color:hsl(210, 25%, 11%);
+    }
+</style>
+{% block content %}
+
+        <section class="py-5">
+            <div class="container my-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="card">
+                            {% if message %}
+                            {{message}}
+                            {% endif %}
+  <div class="card-body">
+           <form class="form-horizontal form-custom" method="post" role="form" action="">
+               {% csrf_token %}
+
+                            <div class="form-group">
+    <label for="exampleInputEmail1">Name</label>
+                                {{form.name}}
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Email</label>
+                                      {{form.email}}
+
+  </div>
+               <div class="form-group">
+    <label for="exampleInputPassword1">Message</label>
+                                      {{form.message}}
+
+  </div>
+               <div class="form-group">
+<!--             errors section-->
+                   </div>
+
+  <button type="submit" class="btn btn-primary mt-1">Submit</button>
+                        </form>
+  </div>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+{% endblock content %}
