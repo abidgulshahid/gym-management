@@ -22,3 +22,6 @@ urlpatterns = [
     path('', include('gym_users.urls'), name='gym_users'),
     path('dashboard/', include('gym_dashboard.urls'), name='gym_dashboard')
 ]
+admin.site.site_header = "Coach"
+admin.site.site_title = "Coach Admin Portal"
+admin.site.index_title = "Welcome to COACH Portal"
