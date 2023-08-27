@@ -6,7 +6,6 @@ from .manager import AbstractUser, UserManager, BaseUserManager
 
 
 class User(AbstractUser):
-    id = models.UUIDField(primary_key=True, unique=True, default=uuid.uuid4())
     email = models.CharField(max_length=100, unique=True)
     type = models.CharField(max_length=255, null=True, blank=True)
     is_deleted = models.BooleanField(default=False)
@@ -71,6 +70,16 @@ class ScheduleClass(models.Model):
     def __str__(self):
         return str(self.user)
 
+
+class ContactForm(models.Model):
+    name = models.CharField(max_length=255, null=True, blank=True)
+    message = models.CharField(max_length=255, null=True, blank=True)
+    email = models.CharField(max_length=255, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name +', '+  self.email
 
 
 class Payments(models.Model):
