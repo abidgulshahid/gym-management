@@ -1,0 +1,28 @@
+{% extends "gym_users/base.html" %}
+{% load static %}
+<style>
+    button {
+
+    background-color:hsl(210, 25%, 11%);
+    }
+</style>
+{% block content %}
+
+        <section class="py-5">
+            <div class="container my-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="card">
+                            {% if message %}
+                            {{message}}
+                            {% endif %}
+  <div class="card-body">
+  </div>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+{% endblock content %}
