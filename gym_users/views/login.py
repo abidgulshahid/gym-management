@@ -29,7 +29,7 @@ class LoginView(View):
                     return redirect(admin_url)
                 login(request,user)
                 return HttpResponseRedirect(reverse_lazy('dashboard_view'))
-            context = {'form': form}
+            context = {'form': form, 'message':"Email Doesn't Exist"}
             return render(request, 'gym_users/login.html', context=context)
         else:
             print(form.errors)
