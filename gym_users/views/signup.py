@@ -1,6 +1,8 @@
+
+from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.shortcuts import render, redirect
+from django.urls import reverse_lazy, reverse
 from django.views import View
 from gym_users.forms.signup import UserSignUpForm
 
@@ -40,6 +42,14 @@ class SignUpView(View):
             user.profile.father_name = data['father_name']
             user.profile.birth_date = data['birth_date']
             user.save()
+            auth = authenticate(**data)
+            if auth:
+                if user.type == "coach":
+                    login(request, auth)
+                    admin_url = reverse('admin:index')
+                    return redirect(admin_url)
+                login(request, auth)
+                return HttpResponseRedirect(reverse_lazy('dashboard_view'))
             return HttpResponseRedirect(reverse_lazy('login_view'))
         else:
             print(form.errors)
