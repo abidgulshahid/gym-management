@@ -6,7 +6,7 @@ from django.views import View
 from django.contrib.auth import login, authenticate
 from gym_users.forms.login import UserLoginForm
 
-
+'''This View will logout the user'''
 class LogoutView(View):
     def dispatch(self, request, *args, **kwargs):
         return super(LogoutView, self).dispatch(request, *args, **kwargs)
