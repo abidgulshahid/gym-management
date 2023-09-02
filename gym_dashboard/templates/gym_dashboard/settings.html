@@ -1,0 +1,79 @@
+{% extends "gym_users/base.html" %}
+{% load static %}
+{% block content %}
+
+   <section class="py-5">
+            <div class="container my-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="card">
+  <div class="card-body">
+      <h1>Settings</h1>
+
+{{setting_form.as_p}}
+
+  </div>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+<div class="modal fade" id="model-content" tabindex="-1" role="dialog" aria-labelledby="expired">
+    <div class="modal-dialog modal-custom" role="document">
+        <div class="modal-content" style="width: 555px;" id="model-content-body">
+            {% include "gym_dashboard/_partial/_create.html" %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+{% block scripts %}
+<script>
+    function load_list(){
+        $.ajax({
+            type: 'GET',
+            url: '',
+            data: {'get_list':true,
+                    },
+            success: function (response) {
+                $('.list-item').html(response);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log('Error')
+            }
+        });
+    }
+    load_list()
+
+    function payment()
+    {
+ $('#model-content').modal('show');
+    }
+
+        function submit_payment(){
+            $.ajax({
+                type: 'POST',
+                url: '',
+                data: $('.content-form').serialize(),
+                success: function (response) {
+                if(response=='success'){
+                   $('#model-content').modal('hide')
+                    load_list()
+                    $('.content-form')[0].reset()
+
+                }else{
+                    $('#model-content-body').html(response)
+
+                }
+
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log('Error')
+                }
+            });
+        }
+</script>
+{% endblock scripts %}
