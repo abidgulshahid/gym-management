@@ -19,6 +19,8 @@ class SignUpView(View):
     def post(self, request):
         form = UserSignUpForm(data=request.POST)
         print(request.POST)
+        '''if USER/COACH fill their form correctly then first it save the form, save the password in 
+        encrypted form then if type is coach then assign it to staff category else normal category'''
         if form.is_valid():
             data = form.cleaned_data
             user = form.save(commit=False)
@@ -32,10 +34,8 @@ class SignUpView(View):
             user.set_password(user.password)
             if type == 'coach':
                 user.is_staff= True
-                user.is_superuser = True
             else:
                 user.is_staff = False
-                user.is_superuser = True
             user.is_active = True
             user.save()
             user.refresh_from_db()
