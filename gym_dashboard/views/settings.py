@@ -7,7 +7,7 @@ from django.shortcuts import redirect
 
 from gym_dashboard.forms.payment import PaymentForm
 from gym_dashboard.forms.settings import SettingsForm
-from gym_users.models import ScheduleClass, Profile
+from gym_users.models import ScheduleClass, Profile, Payments
 
 
 class SettingView(View):
@@ -15,8 +15,7 @@ class SettingView(View):
         return super(SettingView, self).dispatch(request, *args, **kwargs)
 
     def get(self, request):
-        form = PaymentForm()
-        print(Profile.objects.filter(user_id=request.user.id))
+        form = PaymentForm(instance=Payments.objects.filter(user_id=request.user.id).last())
         setting_form = SettingsForm(instance=Profile.objects.filter(user_id=request.user.id).first())
         print(request.user.type)
         if request.user.is_authenticated and request.user.type == 'user':
