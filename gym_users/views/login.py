@@ -14,6 +14,11 @@ class LoginView(View):
     def get(self, request):
         form = UserLoginForm()
         context = {'form': form}
+        '''
+        if the user is logged in and their type is USER then it will redirect to user dashboard or 
+        it will redirect to coach dashboard... if the user is not logged in it will redirect to login page
+        '''
+
         if request.user.is_authenticated and request.user.type == 'user':
             if 'get_list' in request.GET:
                 print('here')
@@ -22,7 +27,7 @@ class LoginView(View):
                 string = render(request, 'gym_dashboard/_partial/_list.html', context=context)
                 return HttpResponse(string)
 
-            return render(request, 'gym_dashboard/dashboard.html', context={'request':request, 'form':form})
+            return render(request, 'gym_dashboard/dashboard.html', context={'request': request, 'form': form})
         elif request.user.is_authenticated and request.user.type == 'coach':
             admin_url = reverse('admin:index')
             return redirect(admin_url)
@@ -31,18 +36,18 @@ class LoginView(View):
     def post(self, request):
         form = UserLoginForm(data=request.POST)
         if form.is_valid():
+
             data = form.cleaned_data
             user = authenticate(**data)
-            print(user, 'user')
+            # this line take username password if it found in our db then it will redirect it to dashboard
             if user:
-                print(dir(user))
                 if user.type == "coach":
                     login(request, user)
                     admin_url = reverse('admin:index')
                     return redirect(admin_url)
-                login(request,user)
+                login(request, user)
                 return HttpResponseRedirect(reverse_lazy('dashboard_view'))
-            context = {'form': form, 'message':"Email Doesn't Exist"}
+            context = {'form': form, 'message': "Email Doesn't Exist"}
             return render(request, 'gym_users/login.html', context=context)
         else:
             print(form.errors)
