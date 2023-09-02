@@ -46,7 +46,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     biography = models.TextField(max_length=500, blank=True)
     location = models.CharField(max_length=30, blank=True)
-    father_name = models.CharField(max_length=255, null=True, blank=True )
+    father_name = models.CharField(max_length=255, null=True, blank=True)
     birth_date = models.DateField(null=True, blank=True)
     is_deleted = models.BooleanField(default=False)
     modified_at = models.DateTimeField(auto_now=True)
@@ -83,14 +83,14 @@ class ContactForm(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.name +', '+  self.email
+        return self.name + ', ' + self.email
 
 
 class Payments(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     Address = models.TextField()
     zip = models.CharField(max_length=255, null=True, blank=True)
-    amount  = models.BigIntegerField(null=True)
+    amount = models.BigIntegerField(null=True)
     email = models.CharField(max_length=255, null=True, blank=True)
     city = models.CharField(max_length=255, null=True, blank=True)
     province = models.CharField(max_length=255, null=True, blank=True)
@@ -100,3 +100,8 @@ class Payments(models.Model):
 
     def __str__(self):
         return str(self.user)
+
+
+class Equipment(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
