@@ -111,7 +111,6 @@ class Payments(models.Model):
 
 
 class Equipment(models.Model):
-    id = models.UUIDField(primary_key=True)
     name = models.CharField(max_length=255, null=True, blank=True)
     description = models.TextField( null=True, blank=True, default='h')
     delivery_date= models.DateTimeField(default=datetime.datetime.now())
