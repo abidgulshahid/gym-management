@@ -1,3 +1,4 @@
+import datetime
 import uuid
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -48,6 +49,13 @@ class Profile(models.Model):
     location = models.CharField(max_length=30, blank=True)
     father_name = models.CharField(max_length=255, null=True, blank=True)
     birth_date = models.DateField(null=True, blank=True)
+    cnic = models.CharField(null=True, blank=True, max_length=255)
+    gender = models.CharField(null=True, blank=True, max_length=255)
+    address = models.CharField(null=True, blank=True, max_length=255)
+    memebership_date = models.DateTimeField(null=True, blank=True)
+    gym_time = models.TimeField(default=datetime.datetime.now())
+    mobile_no = models.CharField(null=True, blank=True, max_length=255)
+    experience = models.CharField(max_length=255, null=True, blank=True)
     is_deleted = models.BooleanField(default=False)
     modified_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)

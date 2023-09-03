@@ -9,27 +9,47 @@ class UserSignUpForm(forms.ModelForm):
     first_name = forms.CharField(max_length=255)
     last_name = forms.CharField(max_length=255)
     father_name = forms.CharField(max_length=255)
+    cnic = forms.CharField(max_length=255)
+    gender = forms.CharField(max_length=255)
+    address = forms.CharField(max_length=255)
+    memebership_date = forms.DateTimeField(initial=datetime.now())
+    gym_time = forms.TimeField()
+    mobile_no = forms.CharField(max_length=255)
 
     class Meta:
         model = User
-        fields = ['email', 'password', 'type', 'birth_date','first_name', 'last_name', 'father_name']
+        fields = ['cnic', 'email', 'password', 'type',
+                  'birth_date', 'first_name',
+                  'last_name', 'father_name', 'gender', 'address', 'memebership_date', 'gym_time', 'mobile_no' ]
 
     TYPE_CHOICES = [("coach", 'COACH'), ("user", 'USER')]
+    GENDER = [("MALE", 'MALE'), ("FEMALE", 'FEMALE')]
 
     def __init__(self, *args, **kwargs):
         super(UserSignUpForm, self).__init__(*args, **kwargs)
 
         self.fields['type'] = forms.ChoiceField(choices=self.TYPE_CHOICES)
+        self.fields['gender'] = forms.ChoiceField(choices=self.GENDER)
         self.fields['email'].widget.attrs['class'] = 'form-control'
         self.fields['password'].widget.attrs['class'] = 'form-control'
         self.fields['birth_date'].widget.attrs['type'] = 'datetime'
         self.fields['birth_date'].widget = forms.TextInput(attrs={'type': 'date'})
+        self.fields['memebership_date'].widget.attrs['class'] = "form-control mydatepicker"
+        self.fields['gym_time'].widget = forms.TextInput(attrs={'type': 'time'})
+
+
         self.fields['birth_date'].widget.attrs['class'] = 'form-control'
         self.fields['first_name'].widget.attrs['class'] = 'form-control'
         self.fields['last_name'].widget.attrs['class'] = 'form-control'
         self.fields['father_name'].widget.attrs['class'] = 'form-control'
-
         self.fields['type'].widget.attrs['class'] = 'form-control'
+
+        self.fields['cnic'].widget.attrs['class'] = 'form-control'
+        self.fields['address'].widget.attrs['class'] = 'form-control'
+        self.fields['gender'].widget.attrs['class'] = 'form-control'
+        self.fields['memebership_date'].widget.attrs['class'] = 'form-control'
+        self.fields['gym_time'].widget.attrs['class'] = 'form-control'
+        self.fields['mobile_no'].widget.attrs['class'] = 'form-control'
 
     # def clean_email(self):
     #     email = self.cleaned_data.get('email')
