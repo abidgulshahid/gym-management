@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.shortcuts import redirect
 
 from gym_dashboard.forms.payment import PaymentForm
-from gym_users.models import ScheduleClass
+from gym_users.models import ScheduleClass, Equipment
 
 
 class Dashboard(View):
@@ -20,7 +20,9 @@ class Dashboard(View):
             if 'get_list' in request.GET:
                 print('here')
                 current_classes = ScheduleClass.objects.filter(user_id=request.user.id)
-                context = {'class': current_classes}
+                equipment = Equipment.objects.all()
+
+                context = {'class': current_classes, 'equipment':equipment}
                 string = render(request, 'gym_dashboard/_partial/_list.html', context=context)
                 return HttpResponse(string)
 
