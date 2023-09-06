@@ -15,12 +15,13 @@ class UserSignUpForm(forms.ModelForm):
     memebership_date = forms.DateTimeField(initial=datetime.now())
     gym_time = forms.TimeField()
     mobile_no = forms.CharField(max_length=255)
+    experience = forms.CharField(max_length=255)
 
     class Meta:
         model = User
         fields = ['cnic', 'email', 'password', 'type',
                   'birth_date', 'first_name',
-                  'last_name', 'father_name', 'gender', 'address', 'memebership_date', 'gym_time', 'mobile_no' ]
+                  'last_name', 'father_name', 'gender', 'address', 'memebership_date', 'gym_time', 'mobile_no', 'experience' ]
 
     TYPE_CHOICES = [("coach", 'COACH'), ("user", 'USER')]
     GENDER = [("MALE", 'MALE'), ("FEMALE", 'FEMALE')]
