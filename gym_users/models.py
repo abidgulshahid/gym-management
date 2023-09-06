@@ -49,7 +49,7 @@ class Profile(models.Model):
     location = models.CharField(max_length=30, blank=True)
     father_name = models.CharField(max_length=255, null=True, blank=True)
     birth_date = models.DateField(null=True, blank=True)
-    cnic = models.CharField(null=True, blank=True, max_length=255)
+    cnic = models.BigIntegerField(null=True, blank=True)
     gender = models.CharField(null=True, blank=True, max_length=255)
     address = models.CharField(null=True, blank=True, max_length=255)
     memebership_date = models.DateTimeField(null=True, blank=True)
@@ -102,7 +102,8 @@ class Payments(models.Model):
     email = models.CharField(max_length=255, null=True, blank=True)
     city = models.CharField(max_length=255, null=True, blank=True)
     province = models.CharField(max_length=255, null=True, blank=True)
-    bank_account_number = models.CharField(max_length=255, null=True, blank=True)
+    bank_account_number = models.BigIntegerField( null=True, blank=True)
+    bank_account_name = models.CharField(max_length=255, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
