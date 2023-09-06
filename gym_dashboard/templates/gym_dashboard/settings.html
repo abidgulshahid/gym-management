@@ -24,8 +24,34 @@
 </ul>
 
 <div class="tab-content" id="myTabContent">
-  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">{{setting_form.as_p}}</div>
-  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">{{form}}.</div>
+  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+      <form action="." method="post">
+          {% csrf_token %}
+      {{setting_form.as_p}}
+          <input type="text" name="save_setting" value="{{request.user.id}}" hidden>
+          <button class="btn btn-primary">Save</button>
+    </form>
+      </div>
+  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">.
+      {% if check_payment  %}
+        <form action="." method="post">
+          {% csrf_token %}
+
+            Name: {{form.bank_account_name}} <br><br>
+            Bank Account Number: {{form.bank_account_number}} <br>
+            Zip: {{form.zip}}<br>
+            Address: {{form.Address}}<br>
+            Amount: {{form.amount}}<br>
+
+            <br>
+          <input type="text" name="save_payment" value="{{request.user.id}}" hidden>
+          <button class="btn btn-primary">Save</button>
+            {% else %}
+            <p>Please add a Payment First</p>
+            {% endif %}
+    </form>
+
+  </div>
   <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">Content for the Contact tab.</div>
 </div>
 
@@ -73,7 +99,7 @@
         function submit_payment(){
             $.ajax({
                 type: 'POST',
-                url: '',
+                url: '{% url 'dashboard_view' %}',
                 data: $('.content-form').serialize(),
                 success: function (response) {
                 if(response=='success'){
