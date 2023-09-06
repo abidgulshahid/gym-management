@@ -29,7 +29,6 @@ class SettingView(View):
         return HttpResponseRedirect(reverse_lazy('index_view'))
 
     def post(self, request):
-
         print(request.POST)
         if 'save_setting' in request.POST:
             form = PaymentForm()
