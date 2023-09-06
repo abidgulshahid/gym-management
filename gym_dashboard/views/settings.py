@@ -16,10 +16,12 @@ class SettingView(View):
 
     def get(self, request):
         form = PaymentForm(instance=Payments.objects.filter(user_id=request.user.id).last())
+        check_payment = Payments.objects.filter(user_id=request.user.id).last()
+
         setting_form = SettingsForm(instance=Profile.objects.filter(user_id=request.user.id).first())
-        print(request.user.type)
         if request.user.is_authenticated and request.user.type == 'user':
-            return render(request, 'gym_dashboard/settings.html', context={'request':request, 'setting_form':setting_form,'form':form})
+            return render(request, 'gym_dashboard/settings.html',
+                          context={'request': request, 'setting_form': setting_form, 'form': form, 'check_payment':check_payment})
         elif request.user.is_authenticated and request.user.type == 'coach':
             admin_url = reverse('admin:index')
             return redirect(admin_url)
@@ -27,11 +29,24 @@ class SettingView(View):
         return HttpResponseRedirect(reverse_lazy('index_view'))
 
     def post(self, request):
+
         print(request.POST)
-        form = PaymentForm(data=request.POST)
-        if 'create_entry' in request.POST:
+        if 'save_setting' in request.POST:
+            form = PaymentForm()
+            setting_form = SettingsForm(data=request.POST, instance=Profile.objects.get(user_id=request.user.id))
+            data = setting_form.save(commit=False)
+            data.user_id = request.POST.get('save_setting')
+            data.save()
+            print('saved')
+            return render(request, 'gym_dashboard/settings.html',
+                          context={'request': request, 'setting_form': setting_form, 'form': form})
+
+        if 'save_payment' in request.POST:
+            form = PaymentForm(data=request.POST, instance=Payments.objects.get(user_id=request.user.id))
+            setting_form = SettingsForm(data=request.POST, instance=Profile.objects.get(user_id=request.user.id))
             if form.is_valid():
                 data = form.save(commit=False)
                 data.user_id = request.user.id
                 data.save()
-                return HttpResponse("success")
+                return render(request, 'gym_dashboard/settings.html',
+                              context={'request': request, 'setting_form': setting_form, 'form': form})
