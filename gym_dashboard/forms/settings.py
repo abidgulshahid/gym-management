@@ -6,7 +6,10 @@ from django.contrib.auth.forms import UserCreationForm
 class SettingsForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = '__all__'
+        fields = ['biography', 'location', 'father_name', 'birth_date',
+                  'cnic',  'gender', 'address', 'memebership_date', 'gym_time',
+                  'mobile_no', 'experience'
+                  ]
         excludes = ['user','created_at', 'modified_at', 'is_deleted', 'user_id']
 
     def __init__(self, *args, **kwargs):
