@@ -44,8 +44,6 @@ class SignUpView(View):
             user.profile.cnic = data['cnic']
             user.profile.address = data['address']
             user.profile.experience = data['experience']
-            user.profile.gym_time = data['gym_time']
-            user.profile.memebership_date = data['memebership_date']
             user.profile.mobile_no = data['mobile_no']
             user.save()
             auth = authenticate(**data)
