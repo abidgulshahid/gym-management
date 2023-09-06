@@ -51,6 +51,7 @@ class UserSignUpForm(forms.ModelForm):
         self.fields['memebership_date'].widget.attrs['class'] = 'form-control'
         self.fields['gym_time'].widget.attrs['class'] = 'form-control'
         self.fields['mobile_no'].widget.attrs['class'] = 'form-control'
+        self.fields['experience'].required = False
 
     # def clean_email(self):
     #     email = self.cleaned_data.get('email')
