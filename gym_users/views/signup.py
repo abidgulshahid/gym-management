@@ -29,7 +29,6 @@ class SignUpView(View):
             user.username = data['email']
             user.first_name = data['first_name']
             user.last_name = data['last_name']
-
             user = form.save()
             user.set_password(user.password)
             if type == 'coach':
@@ -44,6 +43,7 @@ class SignUpView(View):
             user.profile.cnic = data['cnic']
             user.profile.address = data['address']
             user.profile.mobile_no = data['mobile_no']
+            user.profile.gender = data['gender']
             user.save()
             auth = authenticate(**data)
             if auth:
