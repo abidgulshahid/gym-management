@@ -30,6 +30,7 @@ class UserSignUpForm(forms.ModelForm):
         self.fields['type'] = forms.ChoiceField(choices=self.TYPE_CHOICES)
         self.fields['gender'] = forms.ChoiceField(choices=self.GENDER)
         self.fields['email'].widget.attrs['class'] = 'form-control'
+        self.fields['email'].widget.attrs['type'] = 'email'
         self.fields['password'].widget.attrs['class'] = 'form-control'
         self.fields['cnic'].widget.attrs['placeholder'] = '123456789111'
         self.fields['birth_date'].widget.attrs['type'] = 'datetime'
@@ -78,7 +79,7 @@ class UserSignUpForm(forms.ModelForm):
         mobile_no = self.cleaned_data['mobile_no']
         print(mobile_no)
 
-        if mobile_no and len(mobile_no) <=14 and len(mobile_no) > 10:
+        if mobile_no and 14 >= len(mobile_no) > 10:
             return mobile_no
         raise forms.ValidationError("Minimum 11 Digit Required  ")
 
