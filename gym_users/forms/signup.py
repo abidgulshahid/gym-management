@@ -1,7 +1,8 @@
 from django import forms
-from gym_users.models import User
+from gym_users.models import User, Profile
 from django.contrib.auth.forms import UserCreationForm
 from datetime import datetime, date
+import re
 
 
 class UserSignUpForm(forms.ModelForm):
@@ -31,6 +32,7 @@ class UserSignUpForm(forms.ModelForm):
         self.fields['gender'] = forms.ChoiceField(choices=self.GENDER)
         self.fields['email'].widget.attrs['class'] = 'form-control'
         self.fields['password'].widget.attrs['class'] = 'form-control'
+        self.fields['cnic'].widget.attrs['placeholder'] = '123456789111'
         self.fields['birth_date'].widget.attrs['type'] = 'datetime'
         self.fields['birth_date'].widget = forms.TextInput(attrs={'type': 'date'})
 
@@ -64,3 +66,44 @@ class UserSignUpForm(forms.ModelForm):
         if age < 18 and self.cleaned_data.get('type') == 'coach':
             raise forms.ValidationError("Coaches must be 18 or older.")
         return birth_date
+
+    def clean_first_name(self):
+        first_name = self.cleaned_data['first_name']
+        print(first_name)
+        regex = r'^[a-zA-Z]*$'
+        print(re.search(regex, first_name))
+        if first_name and not re.search(regex, first_name):
+            raise forms.ValidationError("Only Alphabets are allowed")
+        return True
+
+    def clean_last_name(self):
+        first_name = self.cleaned_data['last_name']
+        print(first_name)
+        regex = r'^[a-zA-Z]*$'
+        print(re.search(regex, first_name))
+        if first_name and not re.search(regex, first_name):
+            raise forms.ValidationError("Only Alphabets are allowed")
+        return True
+
+    def clean_mobile_no(self):
+        mobile_no = self.cleaned_data['mobile_no']
+        print(mobile_no)
+
+        if mobile_no and len(mobile_no) <=14 and len(mobile_no) > 10:
+            return True
+        raise forms.ValidationError("Minimum 11 Digit Required  ")
+
+
+    def clean_cnic(self):
+        cnic = self.cleaned_data['cnic']
+        print(len(cnic))
+        print(Profile.objects.filter(cnic=cnic).exists())
+        if Profile.objects.filter(cnic=cnic).exists():
+            raise forms.ValidationError("Cnic Already Exists")
+        elif len(cnic) < 13:
+            raise forms.ValidationError("CNIC must be atleast 13 Digits")
+        return True
+
+
+
+
