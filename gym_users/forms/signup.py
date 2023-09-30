@@ -14,6 +14,7 @@ class UserSignUpForm(forms.ModelForm):
     gender = forms.CharField(max_length=255)
     address = forms.CharField(max_length=255)
     mobile_no = forms.CharField(max_length=255)
+    email = forms.EmailField()
 
     class Meta:
         model = User
