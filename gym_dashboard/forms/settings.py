@@ -7,8 +7,8 @@ class SettingsForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['biography', 'location', 'father_name', 'birth_date',
-                  'cnic',  'gender', 'address', 'memebership_date', 'gym_time',
-                  'mobile_no', 'experience'
+                  'cnic',  'gender', 'address',
+                  'mobile_no'
                   ]
         excludes = ['user','created_at', 'modified_at', 'is_deleted', 'user_id']
 
