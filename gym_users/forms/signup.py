@@ -63,7 +63,7 @@ class UserSignUpForm(forms.ModelForm):
         print(re.search(regex, first_name))
         if first_name and not re.search(regex, first_name):
             raise forms.ValidationError("Only Alphabets are allowed")
-        return True
+        return first_name
 
     def clean_last_name(self):
         first_name = self.cleaned_data['last_name']
@@ -72,14 +72,14 @@ class UserSignUpForm(forms.ModelForm):
         print(re.search(regex, first_name))
         if first_name and not re.search(regex, first_name):
             raise forms.ValidationError("Only Alphabets are allowed")
-        return True
+        return first_name
 
     def clean_mobile_no(self):
         mobile_no = self.cleaned_data['mobile_no']
         print(mobile_no)
 
         if mobile_no and len(mobile_no) <=14 and len(mobile_no) > 10:
-            return True
+            return mobile_no
         raise forms.ValidationError("Minimum 11 Digit Required  ")
 
 
@@ -89,7 +89,7 @@ class UserSignUpForm(forms.ModelForm):
             raise forms.ValidationError("Cnic Already Exists")
         elif len(cnic) < 13:
             raise forms.ValidationError("CNIC must be atleast 13 Digits")
-        return True
+        return cnic
 
 
 
