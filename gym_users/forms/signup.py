@@ -14,13 +14,12 @@ class UserSignUpForm(forms.ModelForm):
     gender = forms.CharField(max_length=255)
     address = forms.CharField(max_length=255)
     mobile_no = forms.CharField(max_length=255)
-    experience = forms.CharField(max_length=255)
 
     class Meta:
         model = User
         fields = ['cnic', 'email', 'password', 'type',
                   'birth_date', 'first_name',
-                  'last_name', 'father_name', 'gender', 'address', 'mobile_no', 'experience' ]
+                  'last_name', 'father_name', 'gender', 'address', 'mobile_no' ]
 
     TYPE_CHOICES = [("coach", 'COACH'), ("user", 'USER')]
     GENDER = [("MALE", 'MALE'), ("FEMALE", 'FEMALE')]
@@ -47,16 +46,6 @@ class UserSignUpForm(forms.ModelForm):
         self.fields['address'].widget.attrs['class'] = 'form-control'
         self.fields['gender'].widget.attrs['class'] = 'form-control'
         self.fields['mobile_no'].widget.attrs['class'] = 'form-control'
-        self.fields['experience'].required = False
-
-    # def clean_email(self):
-    #     email = self.cleaned_data.get('email')
-    #
-    #     exists = User.objects.filter(email=email).exists()
-    #     print(email, 'email', exists)
-    #     if exists:
-    #         raise forms.ValidationError("Email Alreayt Exists")
-    #     return True
 
     def clean_birth_date(self):
         birth_date = self.cleaned_data['birth_date']
@@ -96,8 +85,6 @@ class UserSignUpForm(forms.ModelForm):
 
     def clean_cnic(self):
         cnic = self.cleaned_data['cnic']
-        print(len(cnic))
-        print(Profile.objects.filter(cnic=cnic).exists())
         if Profile.objects.filter(cnic=cnic).exists():
             raise forms.ValidationError("Cnic Already Exists")
         elif len(cnic) < 13:
