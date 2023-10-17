@@ -38,6 +38,9 @@
              <div class="form-group">
     <label for="exampleInputEmail1">Father Name</label>
                                 {{form.father_name}}
+                                {% if form.father_name.errors %}
+                                <span class="text-danger"> {{ form.father_name.errors }} </span>
+                          {% endif %}
 
   </div>
 
