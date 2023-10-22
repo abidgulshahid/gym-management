@@ -52,16 +52,13 @@ class UserSignUpForm(forms.ModelForm):
         birth_date = self.cleaned_data['birth_date']
         today = date.today()
         age = today.year - birth_date.year - ((today.month, today.day) < (birth_date.month, birth_date.day))
-
         if age < 18 and self.cleaned_data.get('type') == 'coach':
             raise forms.ValidationError("Coaches must be 18 or older.")
         return birth_date
 
     def clean_first_name(self):
         first_name = self.cleaned_data['first_name']
-        print(first_name)
         regex = r'^[a-zA-Z]*$'
-        print(re.search(regex, first_name))
         if first_name and not re.search(regex, first_name):
             raise forms.ValidationError("Only Alphabets are allowed")
         return first_name
@@ -69,7 +66,6 @@ class UserSignUpForm(forms.ModelForm):
     def clean_last_name(self):
         first_name = self.cleaned_data['last_name']
         regex = r'^[a-zA-Z]*$'
-        print(re.search(regex, first_name))
         if first_name and not re.search(regex, first_name):
             raise forms.ValidationError("Only Alphabets are allowed")
         return first_name
