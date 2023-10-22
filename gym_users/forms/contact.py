@@ -16,4 +16,8 @@ class Contact(forms.ModelForm):
         self.fields['email'].widget.attrs['class'] = 'form-control'
         self.fields['message'].widget.attrs['class'] = 'form-control'
 
-
+    def clean_name(self):
+        name = self.cleaned_data['name']
+        if name.isalpha():
+            return name
+        raise forms.ValidationError("Only Alphabets are allowed")
