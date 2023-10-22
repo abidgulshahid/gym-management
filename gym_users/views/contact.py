@@ -19,4 +19,6 @@ class ContactView(View):
             print('saved')
             form.save()
             return render(request, 'gym_users/success.html', context={"message":"Message Sent Successfully"})
-        return render(request, 'gym_users/contact.html', context={})
+        context = {'form': form}
+        print(form.errors)
+        return render(request, 'gym_users/contact.html', context=context)
