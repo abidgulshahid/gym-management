@@ -96,7 +96,9 @@ class UserSignUpForm(forms.ModelForm):
 
     def clean_father_name(self):
         father_name = self.cleaned_data['father_name']
-        if father_name.isalpha():
-            return father_name
-        raise forms.ValidationError("Only Alphabets are alloweds")
+        if father_name:
+            if father_name.isalpha():
+                return father_name
+            raise forms.ValidationError("Only Alphabets are alloweds")
+        raise forms.ValidationError("Please Enter Your Father Name")
 
