@@ -68,7 +68,6 @@ class UserSignUpForm(forms.ModelForm):
 
     def clean_last_name(self):
         first_name = self.cleaned_data['last_name']
-        print(first_name)
         regex = r'^[a-zA-Z]*$'
         print(re.search(regex, first_name))
         if first_name and not re.search(regex, first_name):
@@ -77,8 +76,6 @@ class UserSignUpForm(forms.ModelForm):
 
     def clean_mobile_no(self):
         mobile_no = self.cleaned_data['mobile_no']
-        print(mobile_no)
-
         if mobile_no and 14 >= len(mobile_no) > 10:
             return mobile_no
         raise forms.ValidationError("Minimum 11 Digit Required  ")
