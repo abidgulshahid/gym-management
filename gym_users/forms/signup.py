@@ -20,7 +20,7 @@ class UserSignUpForm(forms.ModelForm):
         model = User
         fields = ['cnic', 'email', 'password', 'type',
                   'birth_date', 'first_name',
-                  'last_name', 'father_name', 'gender', 'address', 'mobile_no' ]
+                  'last_name', 'father_name', 'gender', 'address', 'mobile_no']
 
     TYPE_CHOICES = [("coach", 'COACH'), ("user", 'USER')]
     GENDER = [("MALE", 'MALE'), ("FEMALE", 'FEMALE')]
@@ -32,12 +32,11 @@ class UserSignUpForm(forms.ModelForm):
         self.fields['gender'] = forms.ChoiceField(choices=self.GENDER)
         self.fields['email'].widget.attrs['class'] = 'form-control'
         self.fields['email'].widget.attrs['type'] = 'email'
+        self.fields['password'].widget = forms.PasswordInput()
         self.fields['password'].widget.attrs['class'] = 'form-control'
         self.fields['cnic'].widget.attrs['placeholder'] = '123456789111'
         self.fields['birth_date'].widget.attrs['type'] = 'datetime'
         self.fields['birth_date'].widget = forms.TextInput(attrs={'type': 'date'})
-
-
         self.fields['birth_date'].widget.attrs['class'] = 'form-control'
         self.fields['first_name'].widget.attrs['class'] = 'form-control'
         self.fields['last_name'].widget.attrs['class'] = 'form-control'
@@ -84,7 +83,6 @@ class UserSignUpForm(forms.ModelForm):
             return mobile_no
         raise forms.ValidationError("Minimum 11 Digit Required  ")
 
-
     def clean_cnic(self):
         cnic = self.cleaned_data['cnic']
         if Profile.objects.filter(cnic=cnic).exists():
@@ -93,7 +91,6 @@ class UserSignUpForm(forms.ModelForm):
             raise forms.ValidationError("CNIC must be atleast 13 Digits")
         return cnic
 
-
     def clean_father_name(self):
         father_name = self.cleaned_data['father_name']
         if father_name:
@@ -101,4 +98,3 @@ class UserSignUpForm(forms.ModelForm):
                 return father_name
             raise forms.ValidationError("Only Alphabets are alloweds")
         raise forms.ValidationError("Please Enter Your Father Name")
-
