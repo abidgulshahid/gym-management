@@ -15,7 +15,6 @@ class Contact(forms.ModelForm):
             # self.fields[field].widget.attrs['class'] = "form-control"
             self.fields[field].required = True
 
-
         self.fields['name'].widget.attrs['class'] = 'form-control'
         self.fields['message'].widget.attrs['class'] = 'form-control'
         self.fields['name'].widget.attrs['placeholder'] = 'Please Enter Your Name'
