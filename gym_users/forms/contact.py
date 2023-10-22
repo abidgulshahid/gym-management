@@ -11,6 +11,10 @@ class Contact(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(Contact, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            # self.fields[field].widget.attrs['class'] = "form-control"
+            self.fields[field].required = True
+
 
         self.fields['name'].widget.attrs['class'] = 'form-control'
         self.fields['email'].widget.attrs['class'] = 'form-control'
@@ -18,6 +22,7 @@ class Contact(forms.ModelForm):
 
     def clean_name(self):
         name = self.cleaned_data['name']
-        if name.isalpha():
-            return name
-        raise forms.ValidationError("Only Alphabets are allowed")
+        if name:
+            if name.isalpha():
+                return name
+            raise forms.ValidationError("Only Alphabets are allowed")
