@@ -17,8 +17,13 @@ class Contact(forms.ModelForm):
 
 
         self.fields['name'].widget.attrs['class'] = 'form-control'
-        self.fields['email'].widget.attrs['class'] = 'form-control'
         self.fields['message'].widget.attrs['class'] = 'form-control'
+        self.fields['email'].widget.attrs['placeholder'] = 'Please Enter Your Email'
+        self.fields['name'].widget.attrs['placeholder'] = 'Please Enter Your Name'
+        self.fields['message'].widget.attrs['placeholder'] = 'Please Enter Your Message'
+        self.fields['email'].widget = forms.EmailInput()
+        self.fields['email'].widget.attrs['class'] = 'form-control'
+
 
     def clean_name(self):
         name = self.cleaned_data['name']
