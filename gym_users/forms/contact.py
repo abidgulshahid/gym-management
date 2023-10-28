@@ -1,3 +1,5 @@
+import re
+
 from django import forms
 from gym_users.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -28,6 +30,7 @@ class Contact(forms.ModelForm):
     def clean_name(self):
         name = self.cleaned_data['name']
         if name:
-            if name.isalpha():
-                return name
-            raise forms.ValidationError("Only Alphabets are allowed")
+            regex = r"[A-Za-z\s]+"
+            if name and not re.search(regex, name):
+                raise forms.ValidationError("Only Alphabets are allowed")
+            return name
