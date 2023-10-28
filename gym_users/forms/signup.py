@@ -58,14 +58,14 @@ class UserSignUpForm(forms.ModelForm):
 
     def clean_first_name(self):
         first_name = self.cleaned_data['first_name']
-        regex = r'^[a-zA-Z]*$'
+        regex = r"[A-Za-z\s]+"
         if first_name and not re.search(regex, first_name):
             raise forms.ValidationError("Only Alphabets are allowed")
         return first_name
 
     def clean_last_name(self):
         first_name = self.cleaned_data['last_name']
-        regex = r'^[a-zA-Z]*$'
+        regex = r"[A-Za-z\s]+"
         if first_name and not re.search(regex, first_name):
             raise forms.ValidationError("Only Alphabets are allowed")
         return first_name
@@ -87,7 +87,8 @@ class UserSignUpForm(forms.ModelForm):
     def clean_father_name(self):
         father_name = self.cleaned_data['father_name']
         if father_name:
-            if father_name.isalpha():
-                return father_name
-            raise forms.ValidationError("Only Alphabets are alloweds")
+            regex = r"[A-Za-z\s]+"
+            if father_name and not re.search(regex, father_name):
+                raise forms.ValidationError("Only Alphabets are allowed")
+            return father_name
         raise forms.ValidationError("Please Enter Your Father Name")
