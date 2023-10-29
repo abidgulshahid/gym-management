@@ -44,7 +44,7 @@ class Tokens(models.Model):
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     biography = models.TextField(max_length=500, blank=True)
     location = models.CharField(max_length=30, blank=True)
     father_name = models.CharField(max_length=255, null=True, blank=True)

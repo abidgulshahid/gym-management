@@ -37,8 +37,9 @@ class SettingView(View):
             data.user_id = request.POST.get('save_setting')
             data.save()
             print('saved')
+            message = "success"
             return render(request, 'gym_dashboard/settings.html',
-                          context={'request': request, 'setting_form': setting_form, 'form': form})
+                          context={'request': request, 'setting_form': setting_form, 'form': form, 'message':message})
 
         if 'save_payment' in request.POST:
             form = PaymentForm(data=request.POST, instance=Payments.objects.get(user_id=request.user.id))
