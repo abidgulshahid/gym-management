@@ -42,7 +42,7 @@ class SettingView(View):
                           context={'request': request, 'setting_form': setting_form, 'form': form, 'message':message})
 
         if 'save_payment' in request.POST:
-            form = PaymentForm(data=request.POST, instance=Payments.objects.get(user_id=request.user.id))
+            form = PaymentForm(data=request.POST)
             setting_form = SettingsForm(data=request.POST, instance=Profile.objects.get(user_id=request.user.id))
             if form.is_valid():
                 data = form.save(commit=False)
