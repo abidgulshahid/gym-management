@@ -30,7 +30,7 @@ class SignUpView(View):
             user.last_name = data['last_name']
             user = form.save()
             user.set_password(user.password)
-            if type == 'coach':
+            if type == 'TRAINER':
                 user.is_staff= True
                 user.is_active = False
             else:

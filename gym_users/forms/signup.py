@@ -22,7 +22,7 @@ class UserSignUpForm(forms.ModelForm):
                   'birth_date', 'first_name',
                   'last_name', 'father_name', 'gender', 'address', 'mobile_no']
 
-    TYPE_CHOICES = [("coach", 'TRAINER'), ("user", 'USER')]
+    TYPE_CHOICES = [("TRAINER", 'TRAINER'), ("user", 'USER')]
     GENDER = [("MALE", 'MALE'), ("FEMALE", 'FEMALE')]
 
     def __init__(self, *args, **kwargs):
