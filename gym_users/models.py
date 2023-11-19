@@ -74,12 +74,13 @@ def update_user_profile(sender, instance, created, **kwargs):
 class ScheduleClass(models.Model):
     name = models.CharField(max_length=255, null=True, blank=True)
     description = models.TextField()
-    time = models.DateTimeField()
+    start_time = models.DateTimeField(null=True, blank=True)
+    end_time = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return str(self.user)
+        return str(self.name)
 
 
 class ContactForm(models.Model):
@@ -104,8 +105,6 @@ class Payments(models.Model):
     total_amount = models.BigIntegerField(null=True)
     CHOICES = [('Advance', 'Advance'), ('Monthly', 'Monthly')]
     status = models.CharField(choices=CHOICES, null=True, max_length=255, blank=True)
-    start_time = models.DateTimeField(null=True, blank=True)
-    end_time = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
