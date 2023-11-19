@@ -41,7 +41,7 @@ class LoginView(View):
             user = authenticate(**data)
             # this line take username password if it found in our db then it will redirect it to dashboard
             if user:
-                if user.type == "coach":
+                if user.type == "TRAINER":
                     login(request, user)
                     admin_url = reverse('admin:index')
                     return redirect(admin_url)
