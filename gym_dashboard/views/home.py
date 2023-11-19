@@ -19,7 +19,7 @@ class Dashboard(View):
         if request.user.is_authenticated and request.user.type == 'user':
             if 'get_list' in request.GET:
                 print('here')
-                current_classes = ScheduleClass.objects.filter(user_id=request.user.id)
+                current_classes = ScheduleClass.objects.all()
                 equipment = Equipment.objects.all()
 
                 context = {'class': current_classes, 'equipment':equipment}

@@ -34,6 +34,7 @@ class UserSignUpForm(forms.ModelForm):
         self.fields['email'].widget.attrs['type'] = 'email'
         self.fields['password'].widget = forms.PasswordInput()
         self.fields['password'].widget.attrs['class'] = 'form-control'
+        self.fields['password'].widget = forms.PasswordInput()
         self.fields['cnic'].widget.attrs['placeholder'] = '123456789111'
         self.fields['birth_date'].widget.attrs['type'] = 'datetime'
         self.fields['birth_date'].widget = forms.TextInput(attrs={'type': 'date'})
