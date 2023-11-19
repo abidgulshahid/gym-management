@@ -12,4 +12,4 @@ class PaymentForm(forms.ModelForm):
         super(PaymentForm, self).__init__(*args, **kwargs)
 
         self.fields['Address'].widget.attrs['class'] = 'form-control'
-        self.fields['amount'].widget.attrs['class'] = 'form-control'
+        # self.fields['amount'].widget.attrs['class'] = 'form-control'
