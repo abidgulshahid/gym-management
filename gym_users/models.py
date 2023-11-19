@@ -97,13 +97,14 @@ class ContactForm(models.Model):
 class Payments(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     Address = models.TextField()
-    zip = models.CharField(max_length=255, null=True, blank=True)
-    amount = models.BigIntegerField(null=True)
-    email = models.CharField(max_length=255, null=True, blank=True)
+    paid_amount = models.BigIntegerField(null=True)
     city = models.CharField(max_length=255, null=True, blank=True)
+    name = models.CharField(max_length=255, null=True, blank=True)
+    mobile_no = models.BigIntegerField(max_length=255, null=True, blank=True)
     province = models.CharField(max_length=255, null=True, blank=True)
-    bank_account_number = models.BigIntegerField( null=True, blank=True)
-    bank_account_name = models.CharField(max_length=255, null=True, blank=True)
+    total_amount = models.BigIntegerField(null=True)
+    CHOICES = [('Advance', 'Advance'), ('Monthly', 'Monthly')]
+    status = models.CharField(choices=CHOICES, null=True, max_length=255, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
