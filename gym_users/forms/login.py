@@ -11,6 +11,7 @@ class UserLoginForm(forms.Form):
         super(UserLoginForm, self).__init__(*args, **kwargs)
 
         self.fields['username'].widget.attrs['class'] = 'form-control'
+        self.fields['password'].widget = forms.PasswordInput()
         self.fields['password'].widget.attrs['class'] = 'form-control'
 
     def validate_username(self):
