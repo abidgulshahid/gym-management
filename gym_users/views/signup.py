@@ -18,7 +18,6 @@ class SignUpView(View):
 
     def post(self, request):
         form = UserSignUpForm(data=request.POST)
-        print(request.POST)
         '''if USER/COACH fill their form correctly then first it save the form, save the password in 
         encrypted form then if type is coach then assign it to staff category else normal category'''
         if form.is_valid():
@@ -33,9 +32,10 @@ class SignUpView(View):
             user.set_password(user.password)
             if type == 'coach':
                 user.is_staff= True
+                user.is_active = False
             else:
                 user.is_staff = False
-            user.is_active = True
+                user.is_active = False
             user.save()
             user.refresh_from_db()
             user.profile.father_name = data['father_name']
@@ -45,16 +45,17 @@ class SignUpView(View):
             user.profile.mobile_no = data['mobile_no']
             user.profile.gender = data['gender']
             user.save()
-            auth = authenticate(**data)
-            if auth:
-                if user.type == "coach":
-                    login(request, auth)
-                    admin_url = reverse('admin:index')
-                    return redirect(admin_url)
-                login(request, auth)
-                return HttpResponseRedirect(reverse_lazy('dashboard_view'))
-            return HttpResponseRedirect(reverse_lazy('login_view'))
+            return HttpResponseRedirect(reverse_lazy('success_view'))
         else:
             print(form.errors)
         context = {'form': form}
         return render(request, 'gym_users/signup.html', context=context)
+
+
+class SuccessMessage(View):
+    def dispatch(self, request, *args, **kwargs):
+        return super(SuccessMessage, self).dispatch(request, *args, **kwargs)
+
+    def get(self, request):
+        return render(request, 'gym_users/success.html')
+
