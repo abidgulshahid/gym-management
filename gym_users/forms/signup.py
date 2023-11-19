@@ -22,7 +22,7 @@ class UserSignUpForm(forms.ModelForm):
                   'birth_date', 'first_name',
                   'last_name', 'father_name', 'gender', 'address', 'mobile_no']
 
-    TYPE_CHOICES = [("coach", 'COACH'), ("user", 'USER')]
+    TYPE_CHOICES = [("coach", 'Trainer'), ("user", 'USER')]
     GENDER = [("MALE", 'MALE'), ("FEMALE", 'FEMALE')]
 
     def __init__(self, *args, **kwargs):
@@ -53,34 +53,46 @@ class UserSignUpForm(forms.ModelForm):
         today = date.today()
         age = today.year - birth_date.year - ((today.month, today.day) < (birth_date.month, birth_date.day))
         if age < 18 and self.cleaned_data.get('type') == 'coach':
-            raise forms.ValidationError("Coaches must be 18 or older.")
+            raise forms.ValidationError("Trainer must be 18 or older.")
         return birth_date
 
     def clean_first_name(self):
         first_name = self.cleaned_data['first_name']
         regex = r"[A-Za-z\s]+"
         if first_name and not re.search(regex, first_name):
-            raise forms.ValidationError("Only Alphabets are allowed")
+            raise forms.ValidationError("Only Characters are allowed")
         return first_name
 
     def clean_last_name(self):
         first_name = self.cleaned_data['last_name']
         regex = r"[A-Za-z\s]+"
         if first_name and not re.search(regex, first_name):
-            raise forms.ValidationError("Only Alphabets are allowed")
+            raise forms.ValidationError("Only Characters are allowed")
         return first_name
 
     def clean_mobile_no(self):
         mobile_no = self.cleaned_data['mobile_no']
-        if mobile_no and 14 >= len(mobile_no) > 10:
-            return mobile_no
-        raise forms.ValidationError("Minimum 11 Digit Required  ")
+        number_pattern = re.compile(r'\d+')
+        if mobile_no:
+            if 10 <= len(mobile_no) <= 14:
+                if number_pattern.findall(mobile_no):
+                    return mobile_no
+                forms.ValidationError("Only Digits are allowed  ")
+
+            raise forms.ValidationError("Minimum 11 Digit Required  ")
+        return None
 
     def clean_cnic(self):
         cnic = self.cleaned_data['cnic']
-        if Profile.objects.filter(cnic=cnic).exists():
-            raise forms.ValidationError("Cnic Already Exists")
-        elif len(cnic) < 13:
+        number_pattern = re.compile(r'\d+')
+        if cnic:
+            if Profile.objects.filter(cnic=cnic).exists():
+                raise forms.ValidationError("Cnic Already Exists")
+            elif len(cnic) < 13:
+                if number_pattern.findall(cnic):
+                    return cnic
+                forms.ValidationError("Only Digits are allowed")
+
             raise forms.ValidationError("CNIC must be atleast 13 Digits")
         return cnic
 
@@ -89,6 +101,6 @@ class UserSignUpForm(forms.ModelForm):
         if father_name:
             regex = r"[A-Za-z\s]+"
             if father_name and not re.search(regex, father_name):
-                raise forms.ValidationError("Only Alphabets are allowed")
+                raise forms.ValidationError("Only Characters are allowed")
             return father_name
         raise forms.ValidationError("Please Enter Your Father Name")
