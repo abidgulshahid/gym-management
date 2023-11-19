@@ -105,6 +105,8 @@ class Payments(models.Model):
     total_amount = models.BigIntegerField(null=True)
     CHOICES = [('Advance', 'Advance'), ('Monthly', 'Monthly')]
     status = models.CharField(choices=CHOICES, null=True, max_length=255, blank=True)
+    start_time = models.DateTimeField(null=True, blank=True)
+    end_time = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
