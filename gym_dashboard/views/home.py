@@ -27,7 +27,7 @@ class Dashboard(View):
                 return HttpResponse(string)
 
             return render(request, 'gym_dashboard/dashboard.html', context={'request':request, 'form':form})
-        elif request.user.is_authenticated and request.user.type == 'TRAINER':
+        elif request.user.is_authenticated and request.user.is_staff:
             admin_url = reverse('admin:index')
             return redirect(admin_url)
 
