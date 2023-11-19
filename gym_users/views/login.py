@@ -9,6 +9,11 @@ from gym_users.models import ScheduleClass
 
 class LoginView(View):
     def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated and request.user.type == 'user':
+            return HttpResponseRedirect(reverse_lazy('dashboard_view'))
+        elif request.user.is_authenticated and request.user.type == 'TRAINER':
+            admin_url = reverse('admin:index')
+            return redirect(admin_url)
         return super(LoginView, self).dispatch(request, *args, **kwargs)
 
     def get(self, request):
@@ -18,19 +23,6 @@ class LoginView(View):
         if the user is logged in and their type is USER then it will redirect to user dashboard or 
         it will redirect to coach dashboard... if the user is not logged in it will redirect to login page
         '''
-
-        if request.user.is_authenticated and request.user.type == 'user':
-            if 'get_list' in request.GET:
-                print('here')
-                current_classes = ScheduleClass.objects.filter(user_id=request.user.id)
-                context = {'class': current_classes}
-                string = render(request, 'gym_dashboard/_partial/_list.html', context=context)
-                return HttpResponse(string)
-
-            return render(request, 'gym_dashboard/dashboard.html', context={'request': request, 'form': form})
-        elif request.user.is_authenticated and request.user.type == 'coach':
-            admin_url = reverse('admin:index')
-            return redirect(admin_url)
         return render(request, 'gym_users/login.html', context=context)
 
     def post(self, request):
