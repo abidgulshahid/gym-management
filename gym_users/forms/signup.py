@@ -88,7 +88,7 @@ class UserSignUpForm(forms.ModelForm):
         if cnic:
             if Profile.objects.filter(cnic=cnic).exists():
                 raise forms.ValidationError("Cnic Already Exists")
-            elif len(cnic) < 13:
+            elif len(cnic) <= 13:
                 if number_pattern.findall(cnic):
                     return cnic
                 forms.ValidationError("Only Digits are allowed")
