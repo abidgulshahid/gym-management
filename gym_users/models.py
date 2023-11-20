@@ -72,6 +72,7 @@ def update_user_profile(sender, instance, created, **kwargs):
 
 
 class ScheduleClass(models.Model):
+    trainer = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=255, null=True, blank=True)
     description = models.TextField()
     start_time = models.DateTimeField(null=True, blank=True)
@@ -96,12 +97,12 @@ class ContactForm(models.Model):
 
 class Payments(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    Address = models.TextField()
+    # Address = models.TextField()
     paid_amount = models.BigIntegerField(null=True)
-    city = models.CharField(max_length=255, null=True, blank=True)
-    name = models.CharField(max_length=255, null=True, blank=True)
-    mobile_no = models.BigIntegerField(max_length=255, null=True, blank=True)
-    province = models.CharField(max_length=255, null=True, blank=True)
+    # city = models.CharField(max_length=255, null=True, blank=True)
+    # name = models.CharField(max_length=255, null=True, blank=True)
+    # mobile_no = models.BigIntegerField(max_length=255, null=True, blank=True)
+    # province = models.CharField(max_length=255, null=True, blank=True)
     total_amount = models.BigIntegerField(null=True)
     CHOICES = [('Advance', 'Advance'), ('Monthly', 'Monthly')]
     status = models.CharField(choices=CHOICES, null=True, max_length=255, blank=True)

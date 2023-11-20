@@ -8,19 +8,23 @@
 </div>
  <hr>
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-2">
             <p><b>Name</b></p>
+    </div>
+
+     <div class="col-md-2">
+            <p><b>Trainer</b></p>
     </div>
 
      <div class="col-md-3">
         <b>Description</b>
     </div>
 
-     <div class="col-md-3">
+     <div class="col-md-2">
          <b>Start Time</b>
     </div>
 
-     <div class="col-md-3">
+     <div class="col-md-2">
          <b>End Time</b>
     </div>
 
@@ -29,8 +33,12 @@
 {% for classes in class %}
 
  <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-2">
             <p>{{classes.name}}</p>
+    </div>
+
+       <div class="col-md-2">
+            <p>{{classes.trainer}}</p>
     </div>
 
      <div class="col-md-3">
@@ -38,11 +46,11 @@
 
     </div>
 
-     <div class="col-md-3">
+     <div class="col-md-2">
          <p>{{classes.start_time}}</p>
     </div>
 
-          <div class="col-md-3">
+          <div class="col-md-2">
          <p>{{classes.end_time}}</p>
     </div>
 
