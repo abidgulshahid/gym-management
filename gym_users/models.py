@@ -45,8 +45,6 @@ class Tokens(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    biography = models.TextField(max_length=500, blank=True)
-    location = models.CharField(max_length=30, blank=True)
     father_name = models.CharField(max_length=255, null=True, blank=True)
     birth_date = models.DateField(null=True, blank=True)
     cnic = models.BigIntegerField(null=True, blank=True)
@@ -56,8 +54,6 @@ class Profile(models.Model):
     # gym_time = models.TimeField(default=datetime.datetime.now())
     mobile_no = models.CharField(null=True, blank=True, max_length=255)
     # experience = models.CharField(max_length=255, null=True, blank=True)
-    is_deleted = models.BooleanField(default=False)
-    modified_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -96,6 +92,7 @@ class ContactForm(models.Model):
 
 
 class Payments(models.Model):
+    id = models.IntegerField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     # Address = models.TextField()
     paid_amount = models.BigIntegerField(null=True)
@@ -103,7 +100,7 @@ class Payments(models.Model):
     # name = models.CharField(max_length=255, null=True, blank=True)
     # mobile_no = models.BigIntegerField(max_length=255, null=True, blank=True)
     # province = models.CharField(max_length=255, null=True, blank=True)
-    total_amount = models.BigIntegerField(null=True)
+    # total_amount = models.BigIntegerField(null=True)
     CHOICES = [('Advance', 'Advance'), ('Monthly', 'Monthly')]
     status = models.CharField(choices=CHOICES, null=True, max_length=255, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
