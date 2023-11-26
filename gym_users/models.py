@@ -1,5 +1,8 @@
 import datetime
+import re
 import uuid
+
+from django.core.exceptions import ValidationError
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.db import models
@@ -56,6 +59,26 @@ class Profile(models.Model):
     # experience = models.CharField(max_length=255, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def clean(self):
+        mobile_no = self.mobile_no
+        father_name = self.father_name
+        number_pattern = re.compile(r'\d+')
+        if mobile_no:
+            if 10 <= len(mobile_no) <= 14:
+                if number_pattern.findall(mobile_no):
+                    return mobile_no
+                ValidationError("Only Digits are allowed  ")
+
+            raise ValidationError("Minimum 11 Digit Required  ")
+
+        if father_name:
+            regex = r"[A-Za-z\s]+"
+            if father_name and not re.search(regex, father_name):
+                raise ValidationError("Only Characters are allowed")
+            return father_name
+        
+
+
     def __str__(self):
         return str(self.user)
 
@@ -76,6 +99,14 @@ class ScheduleClass(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def clean(self):
+        name = self.name
+        if name:
+            regex = r"[A-Za-z\s]+"
+            if name and not re.search(regex, name):
+                raise ValidationError("Only Alphabets are allowed")
+            return name
+
     def __str__(self):
         return str(self.name)
 
@@ -86,6 +117,16 @@ class ContactForm(models.Model):
     email = models.CharField(max_length=255, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def clean(self):
+        name = self.name
+        if name:
+            regex = r"[A-Za-z\s]+"
+            if name and not re.search(regex, name):
+                raise ValidationError("Only Alphabets are allowed")
+            return name
+
+
 
     def __str__(self):
         return self.name + ', ' + self.email
@@ -106,6 +147,9 @@ class Payments(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+
+
+
     def __str__(self):
         return str(self.user)
 
@@ -117,3 +161,11 @@ class Equipment(models.Model):
     cost = models.BigIntegerField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def clean(self):
+        name = self.name
+        if name:
+            regex = r"[A-Za-z\s]+"
+            if name and not re.search(regex, name):
+                raise ValidationError("Only Alphabets are allowed")
+            return name
