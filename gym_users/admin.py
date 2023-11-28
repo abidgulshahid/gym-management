@@ -15,6 +15,7 @@ class PaymentAdmin(admin.ModelAdmin):
 
 class UserAdmin(admin.ModelAdmin):
     list_display = ['username', 'first_name', 'last_name', 'type', 'created_at']
+    exclude = ("email",)
     search_fields = ['type', 'username']
 
 
