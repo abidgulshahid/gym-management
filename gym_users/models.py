@@ -7,11 +7,12 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.db import models
 from .manager import AbstractUser, UserManager, BaseUserManager
-
+from django.utils.translation import gettext as _
 
 class User(AbstractUser):
     email = models.CharField(max_length=100, unique=True)
-    type = models.CharField(max_length=255, null=True, blank=True)
+    TYPE_CHOICES = [("TRAINER", 'TRAINER'), ("user", 'USER')]
+    type = models.CharField(max_length=255, null=True, blank=True, choices=TYPE_CHOICES)
     is_deleted = models.BooleanField(default=False)
     modified_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -60,23 +61,43 @@ class Profile(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def clean(self):
+        print("HERe IN CLEAN RESTRICTION")
         mobile_no = self.mobile_no
         father_name = self.father_name
+        cnic = self.cnic
+        errors  = {}
         number_pattern = re.compile(r'\d+')
         if mobile_no:
-            if 10 <= len(mobile_no) <= 14:
-                if number_pattern.findall(mobile_no):
-                    return mobile_no
-                ValidationError("Only Digits are allowed  ")
+            if not len(mobile_no) > 10 and not len(mobile_no) <=13:
+                errors['mobile_no'] = _("Minimum 11 Digit Required  ")
 
-            raise ValidationError("Minimum 11 Digit Required  ")
+            if not number_pattern.findall(mobile_no):
+                errors['mobile_no'] = _('Only Digits are allowed')
+
 
         if father_name:
             regex = r"[A-Za-z\s]+"
             if father_name and not re.search(regex, father_name):
-                raise ValidationError("Only Characters are allowed")
-            return father_name
+                errors['father_name'] = _("Only Characters are allowed")
         
+        if cnic:
+            print(cnic, 'cnic')
+            cnic = str(cnic)
+            if Profile.objects.filter(cnic=cnic).exists():
+                errors['cnic'] = _('Cnic Already Exists')
+            print(type(cnic))
+            if not len(cnic) <= 13:
+                errors['cnic'] = _("CNIC must be atleast 13 Digits")
+
+            if not number_pattern.findall(cnic):
+                errors['cnic'] = _("Only Digits are allowed")
+
+            
+        
+        print('errors', errors)
+        
+        if errors:
+            raise ValidationError(errors)
 
 
     def __str__(self):
