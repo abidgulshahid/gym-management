@@ -113,7 +113,7 @@ def update_user_profile(sender, instance, created, **kwargs):
 
 class ScheduleClass(models.Model):
     trainer = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    name = models.CharField(max_length=255, null=True, blank=True)
+    class_name = models.CharField(max_length=255, null=True, blank=True)
     description = models.TextField()
     start_time = models.DateTimeField(null=True, blank=True)
     end_time = models.DateTimeField(null=True, blank=True)
@@ -121,7 +121,7 @@ class ScheduleClass(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def clean(self):
-        name = self.name
+        name = self.class_name
         if name:
             regex = r"[A-Za-z\s]+"
             if name and not re.search(regex, name):
@@ -129,7 +129,7 @@ class ScheduleClass(models.Model):
             return name
 
     def __str__(self):
-        return str(self.name)
+        return str(self.class_name)
 
 
 class ContactForm(models.Model):
@@ -154,7 +154,6 @@ class ContactForm(models.Model):
 
 
 class Payments(models.Model):
-    id = models.IntegerField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     # Address = models.TextField()
     paid_amount = models.BigIntegerField(null=True)
